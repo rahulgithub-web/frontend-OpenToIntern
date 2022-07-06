@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 import sectionStyles from './rightSection.module.css'
 import leftSectionStyles from './leftSection.module.css'
 import {useState, useEffect} from 'react';
-import {scaleFactor, placementInterestApi} from '../utils/constants'
+import {scaleFactor, placementinternApi} from '../utils/constants'
 
 
 function maskMail(email) {
@@ -74,7 +74,7 @@ export default function RightSection({
     const [isLoading, setIsLoading] = useState(false)
 
     const {
-        interns:interests,
+        interns,
         name:collegeName,
         fullName
     } = collegeDetails
@@ -213,7 +213,7 @@ export default function RightSection({
             Object.keys(applyForInternFormValues).forEach(key => formData.append(key, applyForInternFormValues[key]))
             formData.append('collegeName', collegeName)
 
-            const response = await fetch(placementInterestApi, {
+            const response = await fetch(placementinternApi, {
                 method: 'POST',
                 body: formData
             })
@@ -246,18 +246,18 @@ export default function RightSection({
 
             <Spacer height={'2.5rem'} />
 
-            {internIntention === 1 && Array.isArray(interests) && !!interests.length && (
-                <div className={sectionStyles.interestContainer} >
-                    <div className={sectionStyles.interestRow} key={0}>
+            {internIntention === 1 && Array.isArray(interns) && !!interns.length && (
+                <div className={sectionStyles.internContainer} >
+                    <div className={sectionStyles.internRow} key={0}>
                         <span className={sectionStyles.rowItemHeading} style={{flex:.75}} >S. no</span>
                         <span className={sectionStyles.rowItemHeading} style={{flex:1}}>Intern Name</span>
                         <span className={sectionStyles.rowItemHeading} style={{flex:1 }}>Email Address</span>
                     </div>
-                    {interests.map((interest, index) => (
-                        <div className={sectionStyles.interestRow} key={interest._id}>
+                    {interns.map((intern, index) => (
+                        <div className={sectionStyles.internRow} key={intern._id}>
                             <span style={{flex:.75, fontSize:'.87rem', fontWeight:'700'}} >{`${index+1}. `}</span>
-                            <span style={{flex:1, fontSize:'.87rem', fontWeight:'700'}}>{interest.name}</span>
-                            <span style={{flex:1, fontSize:'.87rem', }}>{maskMail(interest.email)}</span>
+                            <span style={{flex:1, fontSize:'.87rem', fontWeight:'700'}}>{intern.name}</span>
+                            <span style={{flex:1, fontSize:'.87rem', }}>{maskMail(intern.email)}</span>
                         </div>
                     ))}
                 </div>
